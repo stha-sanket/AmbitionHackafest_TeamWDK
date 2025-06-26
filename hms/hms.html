@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HMS - Login & Registration</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="illustration-section">
+                <div class="medical-illustration">
+                    <svg width="280" height="280" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Background circle with gradient -->
+                        <defs>
+                            <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#e3f2fd;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#bbdefb;stop-opacity:1" />
+                            </linearGradient>
+                            <linearGradient id="cardGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#f8f9fa;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        
+                        <circle cx="200" cy="200" r="190" fill="url(#bgGradient)" stroke="#2196f3" stroke-width="2"/>
+                        
+                        <!-- Main medical card -->
+                        <rect x="100" y="90" width="200" height="250" rx="25" fill="url(#cardGradient)" stroke="#1976d2" stroke-width="3"/>
+                        
+                        <!-- Medical cross -->
+                        <rect x="185" y="120" width="30" height="80" rx="5" fill="#4CAF50"/>
+                        <rect x="170" y="135" width="60" height="30" rx="5" fill="#4CAF50"/>
+                        
+                        <!-- Patient info lines -->
+                        <rect x="130" y="220" width="140" height="8" rx="4" fill="#e0e0e0"/>
+                        <rect x="130" y="240" width="120" height="8" rx="4" fill="#e0e0e0"/>
+                        <rect x="130" y="260" width="100" height="8" rx="4" fill="#e0e0e0"/>
+                        
+                        <!-- Action button -->
+                        <rect x="130" y="290" width="140" height="35" rx="17" fill="#1976d2"/>
+                        <text x="200" y="312" text-anchor="middle" fill="white" font-family="Arial" font-size="12" font-weight="bold">ACCESS PORTAL</text>
+                        
+                        <!-- Floating medical icons -->
+                        <circle cx="80" cy="150" r="25" fill="#fff" stroke="#ff9800" stroke-width="2"/>
+                        <text x="80" y="158" text-anchor="middle" fill="#ff9800" font-family="Arial" font-size="16">♡</text>
+                        
+                        <circle cx="320" cy="180" r="25" fill="#fff" stroke="#4CAF50" stroke-width="2"/>
+                        <text x="320" y="188" text-anchor="middle" fill="#4CAF50" font-family="Arial" font-size="16">+</text>
+                        
+                        <circle cx="90" cy="300" r="20" fill="#fff" stroke="#2196f3" stroke-width="2"/>
+                        <rect x="85" y="295" width="10" height="10" rx="2" fill="#2196f3"/>
+                        
+                        <circle cx="310" cy="280" r="20" fill="#fff" stroke="#ff5722" stroke-width="2"/>
+                        <circle cx="310" cy="280" r="8" fill="#ff5722"/>
+                    </svg>
+                </div>
+                <div class="illustration-text">
+                    <h3>Welcome to HMS</h3>
+                    <p>Secure access to your healthcare management portal</p>
+                </div>
+            </div>
+            
+            <div class="form-section">
+                <div class="auth-header">
+                    <i class="fas fa-hospital-alt"></i>
+                    <h1>Hospital Management System</h1>
+                </div>
+                
+                <div class="tab-container">
+                    <button id="loginTab" class="tab-button active">
+                        <i class="fas fa-sign-in-alt"></i>
+                        <span>Login</span>
+                    </button>
+                    <button id="signupTab" class="tab-button">
+                        <i class="fas fa-user-plus"></i>
+                        <span>Sign Up</span>
+                    </button>
+                </div>
+                
+                <div id="loginForm" class="form-container active">
+                    <form class="auth-form">
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">
+                            <span class="button-text">Login</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                    <div id="loginMessage" class="message"></div>
+                </div>
+                
+                <div id="signupForm" class="form-container">
+                    <form class="auth-form">
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="signupUsername" placeholder="Enter your username" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="input-group">
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="signupPassword" placeholder="Create a password" required>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="submit-button">
+                            <span class="button-text">Create Account</span>
+                            <i class="fas fa-user-plus"></i>
+                        </button>
+                    </form>
+                    <div id="signupMessage" class="message"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="hms.js"></script>
+</body>
+</html>
