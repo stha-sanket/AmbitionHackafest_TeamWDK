@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ICU Information Dashboard</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/static/icu.css" rel="stylesheet" />
+    <link href="/static/patient homepage.css" rel="stylesheet" />
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <div class="container">
+        <header class="dashboard-header">
+          <div class="header-content">
+            <div class="header-icon">
+              <i class="fas fa-hospital"></i>
+            </div>
+            <div class="header-text">
+              <h1>ICU Information Dashboard</h1>
+              <p>Real-time monitoring of intensive care units</p>
+            </div>
+          </div>
+          <div class="header-stats">
+            <div class="stat-item">
+              <span class="stat-number">3</span>
+              <span class="stat-label">Total Units</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">2</span>
+              <span class="stat-label">Occupied</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-number">1</span>
+              <span class="stat-label">Available</span>
+            </div>
+          </div>
+        </header>
+
+        <main class="dashboard-main">
+          <div class="icu-grid">
+            <!-- ICU Unit 01 -->
+            <div class="icu-card occupied">
+              <div class="card-header">
+                <div class="unit-info">
+                  <h3 class="unit-id">ICU-01</h3>
+                  <span class="room-number">Room 101</span>
+                </div>
+                <div class="status-badge occupied">
+                  <i class="fas fa-user"></i>
+                  <span>Occupied</span>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="patient-info">
+                  <div class="info-row">
+                    <span class="label">
+                      <i class="fas fa-user-injured"></i>
+                      Patient
+                    </span>
+                    <span class="value">John Doe (You)</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="label">
+                      <i class="fas fa-heartbeat"></i>
+                      Condition
+                    </span>
+                    <span class="value condition stable">
+                      <i class="fas fa-check-circle"></i>
+                      Stable
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <div class="last-updated">
+                  <i class="fas fa-clock"></i>
+                  <span>Last updated: 2 hours ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ICU Unit 02 -->
+            <div class="icu-card occupied">
+              <div class="card-header">
+                <div class="unit-info">
+                  <h3 class="unit-id">ICU-02</h3>
+                  <span class="room-number">Room 102</span>
+                </div>
+                <div class="status-badge occupied">
+                  <i class="fas fa-user"></i>
+                  <span>Occupied</span>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="patient-info">
+                  <div class="info-row">
+                    <span class="label">
+                      <i class="fas fa-user-injured"></i>
+                      Patient
+                    </span>
+                    <span class="value">Patient B</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="label">
+                      <i class="fas fa-heartbeat"></i>
+                      Condition
+                    </span>
+                    <span class="value condition monitoring">
+                      <i class="fas fa-exclamation-triangle"></i>
+                      Monitoring
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <div class="last-updated">
+                  <i class="fas fa-clock"></i>
+                  <span>Last updated: 30 minutes ago</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ICU Unit 03 -->
+            <div class="icu-card available">
+              <div class="card-header">
+                <div class="unit-info">
+                  <h3 class="unit-id">ICU-03</h3>
+                  <span class="room-number">Room 103</span>
+                </div>
+                <div class="status-badge available">
+                  <i class="fas fa-bed"></i>
+                  <span>Available</span>
+                </div>
+              </div>
+
+              <div class="card-body">
+                <div class="patient-info">
+                  <div class="info-row">
+                    <span class="label">
+                      <i class="fas fa-user-injured"></i>
+                      Patient
+                    </span>
+                    <span class="value empty">No patient assigned</span>
+                  </div>
+                  <div class="info-row">
+                    <span class="label">
+                      <i class="fas fa-heartbeat"></i>
+                      Condition
+                    </span>
+                    <span class="value empty">-</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <div class="last-updated">
+                  <i class="fas fa-clock"></i>
+                  <span>Ready for admission</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+
+        <footer class="dashboard-footer">
+          <div class="footer-content">
+            <div class="footer-actions">
+              <button class="refresh-btn">
+                <i class="fas fa-sync-alt"></i>
+                Refresh Data
+              </button>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+
+    <script src="/static/icu.js"></script>
+  </body>
+</html>

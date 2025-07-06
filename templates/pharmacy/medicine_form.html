@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow border border-gray-200 mt-8">
+  <div class="px-6 py-4 border-b border-gray-100">
+    <h2 class="text-xl font-bold text-gray-900">{% if medicine %}Edit{% else %}Add{% endif %} Medicine</h2>
+  </div>
+  <div class="px-6 py-6">
+    <form method="post" class="space-y-6">
+      {% csrf_token %}
+      
+      <div>
+        <label for="{{ form.name.id_for_label }}" class="block font-semibold mb-1">Name</label>
+        {{ form.name }}
+        {% if form.name.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ form.name.errors.0 }}</p>
+        {% endif %}
+      </div>
+      
+      <div>
+        <label for="{{ form.quantity.id_for_label }}" class="block font-semibold mb-1">Quantity</label>
+        {{ form.quantity }}
+        {% if form.quantity.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ form.quantity.errors.0 }}</p>
+        {% endif %}
+      </div>
+      
+      <div>
+        <label for="{{ form.price.id_for_label }}" class="block font-semibold mb-1">Price</label>
+        {{ form.price }}
+        {% if form.price.errors %}
+          <p class="text-red-600 text-sm mt-1">{{ form.price.errors.0 }}</p>
+        {% endif %}
+      </div>
+      
+      <div class="flex items-center gap-4 mt-6">
+        <button type="submit" class="px-6 py-3 bg-primary-600 text-white rounded-xl shadow hover:bg-primary-700 transition font-semibold text-lg">
+          Save
+        </button>
+        <a href="{% url 'medicine_list' %}" class="px-6 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition font-semibold text-lg">
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

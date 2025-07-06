@@ -1,0 +1,232 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard - HealthSync Pro{% endblock %}
+
+{% block content %}
+<div class="space-y-8">
+    <!-- Welcome Section -->
+    <div class="bg-gradient-to-br from-primary-600 via-primary-700 to-primary-800 rounded-2xl p-8 text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-10"></div>
+        <div class="relative z-10">
+            <div class="flex items-center justify-between">
+                <div>
+                    <h1 class="text-3xl font-bold mb-2">Hospital Management Dashboard</h1>
+                    <p class="text-primary-100 text-lg">Real-time overview of hospital operations</p>
+                </div>
+                <div class="hidden md:block">
+                    <div class="text-right">
+                        <div class="text-2xl font-bold">{{ "now"|date:"l, F j" }}</div>
+                        <div class="text-primary-200">{{ "now"|date:"g:i A" }}</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quick Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mt-8">
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-primary-200 text-sm font-medium">Total Patients</p>
+                            <p class="text-3xl font-bold">{{ total_patients }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-primary-200 text-sm font-medium">Active Visits</p>
+                            <p class="text-3xl font-bold">{{ active_visits }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-primary-200 text-sm font-medium">Available Beds</p>
+                            <p class="text-3xl font-bold">{{ available_beds }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white bg-opacity-20 backdrop-blur-sm rounded-xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-primary-200 text-sm font-medium">Available ICU</p>
+                            <p class="text-3xl font-bold">{{ available_icu }}</p>
+                        </div>
+                        <div class="w-12 h-12 bg-white bg-opacity-20 rounded-lg flex items-center justify-center">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Dashboard Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Left Column -->
+        <div class="lg:col-span-2 space-y-8">
+            <!-- Recent Admissions -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900">Recent Admissions</h2>
+                        <a href="{% url 'admission_list' %}" class="text-sm text-primary-600 hover:text-primary-700 font-medium">View all</a>
+                    </div>
+                </div>
+                <div class="p-6">
+                    {% if recent_admissions %}
+                        <div class="space-y-4">
+                            {% for admission in recent_admissions %}
+                            <div class="flex items-start space-x-4 p-4 bg-gray-50 rounded-lg">
+                                <div class="flex-shrink-0">
+                                    <div class="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                                        <svg class="w-4 h-4 text-primary-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900">{{ admission.patient_name }}</p>
+                                    <p class="text-sm text-gray-500">Dr. {{ admission.doctor_name }} • Bed {{ admission.bed_number }}</p>
+                                    <p class="text-xs text-gray-400 mt-1">{{ admission.admitted_at|date:"M j, Y g:i A" }}</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                        Admitted
+                                    </span>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-8">
+                            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                            <h3 class="mt-2 text-sm font-medium text-gray-900">No recent admissions</h3>
+                            <p class="mt-1 text-sm text-gray-500">Get started by adding a new admission.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="space-y-8">
+            <!-- Quick Actions -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="p-6">
+                    <div class="space-y-3">
+                        {% for action in quick_actions %}
+                        <a href="{% url action.url %}" class="flex items-center gap-3 p-3 text-left bg-{{ action.color }}-50 hover:bg-{{ action.color }}-100 rounded-lg transition-colors">
+                            <span class="text-sm font-medium text-gray-900">{{ action.label }}</span>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Alerts & Warnings -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold text-gray-900">Alerts & Warnings</h2>
+                </div>
+                <div class="p-6">
+                    <div class="space-y-4">
+                        {% if medicine_alert > 0 %}
+                        <div class="flex items-center space-x-3 p-3 bg-warning-50 rounded-lg border border-warning-200">
+                            <div class="w-3 h-3 bg-warning-500 rounded-full"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900">Medicine Alerts</p>
+                                <p class="text-xs text-gray-500">{{ medicine_alert }} items need attention</p>
+                            </div>
+                            <a href="/pharmacy/" class="text-sm text-warning-600 hover:text-warning-700 font-medium">View</a>
+                        </div>
+                        {% endif %}
+                        
+                        {% if low_blood %}
+                        <div class="flex items-center space-x-3 p-3 bg-danger-50 rounded-lg border border-danger-200">
+                            <div class="w-3 h-3 bg-danger-500 rounded-full"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900">Low Blood Stock</p>
+                                <p class="text-xs text-gray-500">{{ low_blood.count }} blood types low</p>
+                            </div>
+                            <a href="/bloodbank/" class="text-sm text-danger-600 hover:text-danger-700 font-medium">View</a>
+                        </div>
+                        {% endif %}
+                        
+                        {% if waiting_count > 0 %}
+                        <div class="flex items-center space-x-3 p-3 bg-primary-50 rounded-lg border border-primary-200">
+                            <div class="w-3 h-3 bg-primary-500 rounded-full"></div>
+                            <div class="flex-1">
+                                <p class="text-sm font-medium text-gray-900">Bed Waiting List</p>
+                                <p class="text-xs text-gray-500">{{ waiting_count }} patients waiting</p>
+                            </div>
+                            <a href="{% url 'waiting_list' %}" class="text-sm text-primary-600 hover:text-primary-700 font-medium">View</a>
+                        </div>
+                        {% endif %}
+                        
+                        {% if medicine_alert == 0 and not low_blood and waiting_count == 0 %}
+                        <div class="text-center py-4">
+                            <svg class="mx-auto h-8 w-8 text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                            <p class="mt-2 text-sm text-gray-500">All systems operational</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Discharges -->
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200">
+                <div class="px-6 py-4 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-lg font-semibold text-gray-900">Recent Discharges</h2>
+                        <a href="{% url 'admission_list' %}" class="text-sm text-primary-600 hover:text-primary-700 font-medium">View all</a>
+                    </div>
+                </div>
+                <div class="p-6">
+                    {% if recent_discharges %}
+                        <div class="space-y-4">
+                            {% for discharge in recent_discharges %}
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-lg">
+                                <div class="w-2 h-2 bg-success-500 rounded-full"></div>
+                                <div class="flex-1 min-w-0">
+                                    <p class="text-sm font-medium text-gray-900">{{ discharge.patient_name }}</p>
+                                    <p class="text-xs text-gray-500">Discharged {{ discharge.discharged_at|date:"M j, Y" }}</p>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <p class="text-sm text-gray-500">No recent discharges</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

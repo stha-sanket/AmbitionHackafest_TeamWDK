@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex items-center justify-between mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2">Medicine Inventory</h2>
+    <div class="flex items-center space-x-4">
+        <a href="{% url 'medicine_add' %}" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-xl shadow hover:bg-primary-700 transition text-lg font-semibold btn-animate focus-outline mb-8">
+            <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+            Add Medicine
+        </a>
+    </div>
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    <div class="overflow-x-auto bg-white rounded-2xl shadow border border-gray-200">
+        <table class="min-w-full divide-y divide-gray-200 text-lg">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Name</th>
+                    <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Quantity</th>
+                    <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Stock Status</th>
+                    <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Price</th>
+                    <th class="px-8 py-4 text-center text-base font-bold text-gray-600 uppercase tracking-wider">Select</th>
+                    <th class="px-8 py-4 text-center text-base font-bold text-gray-600 uppercase tracking-wider">Quantity to Buy</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-100">
+            {% for medicine in medicines %}
+                <tr class="hover:bg-primary-50 transition row-animate">
+                    <td class="px-8 py-4 whitespace-nowrap text-lg text-gray-900">{{ medicine.name }}</td>
+                    <td class="px-8 py-4 whitespace-nowrap text-lg">{{ medicine.quantity }}</td>
+                    <td class="px-8 py-4 whitespace-nowrap text-lg">
+                        {% if medicine.stock_status == 'In Stock' %}
+                            <span class="text-green-500">{{ medicine.stock_status }}</span>
+                        {% elif medicine.stock_status == 'Low Stock' %}
+                            <span class="text-yellow-500">{{ medicine.stock_status }}</span>
+                        {% elif medicine.stock_status == 'Out of Stock' %}
+                            <span class="text-red-500">{{ medicine.stock_status }}</span>
+                        {% else %}
+                            {{ medicine.stock_status }}
+                        {% endif %}
+                    </td>
+                    <td class="px-8 py-4 whitespace-nowrap text-lg">{{ medicine.price }}</td>
+                    <td class="px-8 py-4 whitespace-nowrap text-center text-lg">
+                        <input type="checkbox" name="medicine_{{ medicine.pk }}" value="{{ medicine.pk }}" class="form-checkbox h-5 w-5 text-blue-500">
+                    </td>
+                    <td class="px-8 py-4 whitespace-nowrap text-center text-lg">
+                        <input type="number" name="quantity_{{ medicine.pk }}" min="0" value="0" class="w-20 text-center border rounded-md">
+                    </td>
+                    <td class="px-8 py-4 whitespace-nowrap text-center text-lg">
+                        <div class="flex items-center space-x-4">
+                            <a href="{% url 'medicine_edit' medicine.pk %}" class="text-yellow-500 hover:text-yellow-700">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a href="{% url 'medicine_delete' medicine.pk %}" class="text-red-500 hover:text-red-700">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="7" class="text-center py-10 text-gray-400 text-lg">No medicines found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="mt-4">
+    </div>
+    <div class="mt-6 flex justify-center">
+        <p>Total: <span id="total_price">{{ total_price|default:0 }}</span></p>
+    </div>
+    <div class="mt-6 flex justify-center">
+        <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Checkout</button>
+    </div>
+    <br>
+</form>
+
+{% endblock %}

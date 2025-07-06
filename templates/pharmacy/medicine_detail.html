@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow border border-gray-200 mt-8">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-gray-900">Medicine Details</h2>
+        <a href="{% url 'medicine_edit' medicine.pk %}" class="inline-flex items-center px-4 py-2 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 transition text-sm font-semibold">
+            Edit
+        </a>
+    </div>
+    <div class="px-6 py-6">
+        <dl class="divide-y divide-gray-100">
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-medium text-gray-500">Name</dt>
+                <dd class="col-span-2 text-gray-900">{{ medicine.name }}</dd>
+            </div>
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-medium text-gray-500">Quantity</dt>
+                <dd class="col-span-2 text-gray-900">{{ medicine.quantity }}</dd>
+            </div>
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-medium text-gray-500">Price</dt>
+                <dd class="col-span-2 text-gray-900">${{ medicine.price }}</dd>
+            </div>
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-medium text-gray-500">Created At</dt>
+                <dd class="col-span-2 text-gray-900">{{ medicine.created_at|date:"Y-m-d H:i" }}</dd>
+            </div>
+            <div class="py-3 grid grid-cols-3 gap-4">
+                <dt class="font-medium text-gray-500">Stock Status</dt>
+                <dd class="col-span-2 text-gray-900">{{ medicine.get_stock_status_display }}</dd>
+            </div>
+        </dl>
+        <div class="flex items-center justify-between mt-8">
+            <a href="{% url 'medicine_list' %}" class="inline-flex items-center px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-semibold">Back to List</a>
+            <a href="{% url 'medicine_delete' medicine.pk %}" class="inline-flex items-center px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition font-semibold">
+                Delete
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

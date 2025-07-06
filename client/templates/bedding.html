@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ICU Information Dashboard</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="/static/navbar.css" rel="stylesheet" />
+    <link href="/static/bedding.css" rel="stylesheet" />
+  </head>
+  <body>
+    {% include 'navbar.html' %}
+    <div class="container">
+      <header class="dashboard-header">
+        <div class="header-content">
+          <div class="header-icon">
+            <i class="fas fa-hospital"></i>
+          </div>
+          <div class="header-text">
+            <h1>Bedding Information Dashboard</h1>
+            <p>Real-time monitoring of hospital beds</p>
+          </div>
+        </div>
+        <div class="header-stats">
+          <div class="stat-item">
+            <span class="stat-number">3</span>
+            <span class="stat-label">Total Beds</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">2</span>
+            <span class="stat-label">Occupied</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">1</span>
+            <span class="stat-label">Available</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="dashboard-main">
+        <div class="bed-table-container">
+          <div class="bed-table">
+            <div class="table-header">
+              <div class="header-cell">Bed Number</div>
+              <div class="header-cell">Status</div>
+              <div class="header-cell">Patient</div>
+            </div>
+            <div class="table-body">
+              <div class="table-row occupied">
+                <div class="table-cell bed-number">
+                  <div class="bed-icon">
+                    <i class="fas fa-bed"></i>
+                  </div>
+                  <span class="bed-id">B-101</span>
+                </div>
+                <div class="table-cell">
+                  <div class="status-indicator occupied">
+                    <i class="fas fa-user"></i>
+                    <span>Occupied</span>
+                  </div>
+                </div>
+                <div class="table-cell patient-name">John Doe (You)</div>
+              </div>
+              <div class="table-row available">
+                <div class="table-cell bed-number">
+                  <div class="bed-icon">
+                    <i class="fas fa-bed"></i>
+                  </div>
+                  <span class="bed-id">B-102</span>
+                </div>
+                <div class="table-cell">
+                  <div class="status-indicator available">
+                    <i class="fas fa-bed"></i>
+                    <span>Available</span>
+                  </div>
+                </div>
+                <div class="table-cell patient-name empty">-</div>
+              </div>
+              <div class="table-row occupied">
+                <div class="table-cell bed-number">
+                  <div class="bed-icon">
+                    <i class="fas fa-bed"></i>
+                  </div>
+                  <span class="bed-id">B-103</span>
+                </div>
+                <div class="table-cell">
+                  <div class="status-indicator occupied">
+                    <i class="fas fa-user"></i>
+                    <span>Occupied</span>
+                  </div>
+                </div>
+                <div class="table-cell patient-name">Patient C</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer class="dashboard-footer">
+        <div class="footer-content">
+          <div class="footer-actions">
+            <button class="refresh-btn">
+              <i class="fas fa-user-clock"></i>
+              Add to Waiting List
+            </button>
+            <button
+              class="refresh-data-btn"
+              style="margin-left: 10px; background-color: #3b82f6"
+            >
+              <i class="fas fa-sync-alt"></i>
+              Refresh Data
+            </button>
+          </div>
+        </div>
+      </footer>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        fetchBeddingData();
+        document
+          .querySelector(".refresh-btn")
+          .addEventListener("click", addToWaitingList);
+        document
+          .querySelector(".refresh-data-btn")
+          .addEventListener("click", fetchBeddingData);
+      });
+
+      async function addToWaitingList() {
+        const button = document.querySelector(".refresh-btn");
+        const originalText = button.innerHTML;
+
+        // Show loading state
+        button.innerHTML =
+          '<i class="fas fa-spinner fa-spin"></i> Adding to Waiting List...';
+        button.disabled = true;
+
+        try {
+          const response = await fetch("/api/add-to-waiting-list", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+
+          const data = await response.json();
+
+          if (data.success) {
+            // Show success message
+            button.innerHTML =
+              '<i class="fas fa-check"></i> Added to Waiting List!';
+            button.style.backgroundColor = "#10b981";
+
+            // Show success notification
+            showNotification(data.message, "success");
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+              button.innerHTML = originalText;
+              button.style.backgroundColor = "";
+              button.disabled = false;
+            }, 3000);
+          } else {
+            // Show error message
+            button.innerHTML =
+              '<i class="fas fa-exclamation-triangle"></i> Error';
+            button.style.backgroundColor = "#ef4444";
+
+            // Show error notification
+            showNotification(data.error, "error");
+
+            // Reset button after 3 seconds
+            setTimeout(() => {
+              button.innerHTML = originalText;
+              button.style.backgroundColor = "";
+              button.disabled = false;
+            }, 3000);
+          }
+        } catch (error) {
+          console.error("Error:", error);
+
+          // Show error message
+          button.innerHTML =
+            '<i class="fas fa-exclamation-triangle"></i> Error';
+          button.style.backgroundColor = "#ef4444";
+
+          // Show error notification
+          showNotification(
+            "Failed to add to waiting list. Please try again.",
+            "error"
+          );
+
+          // Reset button after 3 seconds
+          setTimeout(() => {
+            button.innerHTML = originalText;
+            button.style.backgroundColor = "";
+            button.disabled = false;
+          }, 3000);
+        }
+      }
+
+      function showNotification(message, type) {
+        // Create notification element
+        const notification = document.createElement("div");
+        notification.className = `notification ${type}`;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px 20px;
+          border-radius: 8px;
+          color: white;
+          font-weight: 500;
+          z-index: 1000;
+          max-width: 300px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+          transform: translateX(100%);
+          transition: transform 0.3s ease;
+        `;
+
+        if (type === "success") {
+          notification.style.backgroundColor = "#10b981";
+        } else {
+          notification.style.backgroundColor = "#ef4444";
+        }
+
+        notification.textContent = message;
+
+        // Add to page
+        document.body.appendChild(notification);
+
+        // Animate in
+        setTimeout(() => {
+          notification.style.transform = "translateX(0)";
+        }, 100);
+
+        // Remove after 5 seconds
+        setTimeout(() => {
+          notification.style.transform = "translateX(100%)";
+          setTimeout(() => {
+            document.body.removeChild(notification);
+          }, 300);
+        }, 5000);
+      }
+
+      async function fetchBeddingData() {
+        const stats = document.querySelectorAll(".header-stats .stat-number");
+        const tableBody = document.querySelector(".table-body");
+        tableBody.innerHTML =
+          '<div style="padding:1.5rem;text-align:center;color:#888;">Loading...</div>';
+        try {
+          const response = await fetch("/api/bedding-data");
+          const data = await response.json();
+          if (data.success) {
+            // Update stats
+            stats[0].textContent = data.statistics.total;
+            stats[1].textContent = data.statistics.occupied;
+            stats[2].textContent = data.statistics.available;
+            // Update table
+            if (data.data.length === 0) {
+              tableBody.innerHTML =
+                '<div style="padding:1.5rem;text-align:center;color:#888;">No beds found.</div>';
+            } else {
+              tableBody.innerHTML = "";
+              data.data.forEach((bed) => {
+                const row = document.createElement("div");
+                row.className =
+                  "table-row " + (bed.is_occupied ? "occupied" : "available");
+                row.innerHTML = `
+                            <div class="table-cell bed-number">
+                                <div class="bed-icon"><i class="fas fa-bed"></i></div>
+                                <span class="bed-id">${bed.bed_number}</span>
+                            </div>
+                            <div class="table-cell">
+                                <div class="status-indicator ${
+                                  bed.is_occupied ? "occupied" : "available"
+                                }">
+                                    <i class="fas ${
+                                      bed.is_occupied ? "fa-user" : "fa-bed"
+                                    }"></i>
+                                    <span>${bed.status}</span>
+                                </div>
+                            </div>
+                            <div class="table-cell patient-name${
+                              bed.is_occupied ? "" : " empty"
+                            }">${bed.assigned_patient}</div>
+                        `;
+                tableBody.appendChild(row);
+              });
+            }
+          } else {
+            tableBody.innerHTML =
+              '<div style="padding:1.5rem;text-align:center;color:#e53e3e;">Failed to load data.</div>';
+          }
+        } catch (e) {
+          tableBody.innerHTML =
+            '<div style="padding:1.5rem;text-align:center;color:#e53e3e;">Error loading data.</div>';
+        }
+      }
+    </script>
+    <script src="/static/bedding.js"></script>
+  </body>
+</html>

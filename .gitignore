@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+
+# Django
+*.log
+db.sqlite3
+
+# Database
+/client/healthdata.db/
+/client/navigation.db/
+/client/dbb.sqlite3
+
+# Environment variables
+.env

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="flex items-center justify-between mb-8">
+    <h2 class="text-3xl font-bold text-gray-900 mb-2">Patient Records</h2>
+    <a href="{% url 'patient_add' %}" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-xl shadow hover:bg-primary-700 transition text-lg font-semibold btn-animate focus-outline mb-8">
+        <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+        </svg>
+        Add Patient
+    </a>
+</div>
+<div class="overflow-x-auto bg-white rounded-2xl shadow border border-gray-200">
+    <table class="min-w-full divide-y divide-gray-200 text-lg">
+        <thead class="bg-gray-50">
+            <tr>
+                <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">ID</th>
+                <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Name</th>
+                <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Age</th>
+                <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Sex</th>
+                <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Phone</th>
+                <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Guardian</th>
+                <th class="px-8 py-4 text-center text-base font-bold text-gray-600 uppercase tracking-wider">Actions</th>
+            </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-100">
+            {% for patient in patients %}
+            <tr class="hover:bg-primary-50 transition row-animate">
+                <td class="px-8 py-4 whitespace-nowrap text-lg text-gray-900">{{ patient.pk }}</td>
+                <td class="px-8 py-4 whitespace-nowrap text-lg text-gray-900">{{ patient.name }}</td>
+                <td class="px-8 py-4 whitespace-nowrap text-lg text-gray-900">{{ patient.age }}</td>
+                <td class="px-8 py-4 whitespace-nowrap text-lg text-gray-900">{{ patient.get_sex_display }}</td>
+                <td class="px-8 py-4 whitespace-nowrap text-lg text-gray-900">{{ patient.phone }}</td>
+                <td class="px-8 py-4 whitespace-nowrap text-lg text-gray-900">{{ patient.guardian_name }}</td>
+                <td class="px-8 py-4 whitespace-nowrap text-center text-lg">
+                    <a href="{% url 'patient_detail' patient.pk %}" class="inline-flex items-center px-3 py-2 text-base font-semibold text-blue-600 hover:text-white hover:bg-blue-600 rounded-xl transition mr-2 btn-animate focus-outline" title="View">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                    </a>
+                    <a href="{% url 'patient_edit' patient.pk %}" class="inline-flex items-center px-3 py-2 text-base font-semibold text-yellow-600 hover:text-white hover:bg-yellow-500 rounded-xl transition mr-2 btn-animate focus-outline" title="Edit">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6m2 2l-6 6m2 2l-6 6"/></svg>
+                    </a>
+                    <a href="{% url 'patient_delete' patient.pk %}" class="inline-flex items-center px-3 py-2 text-base font-semibold text-red-600 hover:text-white hover:bg-red-600 rounded-xl transition btn-animate focus-outline" title="Delete">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center py-10 text-gray-400 text-lg">No patients found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %} 

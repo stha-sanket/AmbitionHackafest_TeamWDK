@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow border border-gray-200 mt-8 card-animate">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-gray-900">{% if patient %}Edit{% else %}Add{% endif %} Patient</h2>
+    </div>
+    <div class="px-6 py-6">
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="id_name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" name="name" id="id_name" value="{{ form.name.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter full name">
+                    {% if form.name.errors %}<p class="text-red-600 text-xs mt-1">{{ form.name.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label for="id_age" class="block text-sm font-medium text-gray-700">Age</label>
+                    <input type="number" name="age" id="id_age" value="{{ form.age.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter age">
+                    {% if form.age.errors %}<p class="text-red-600 text-xs mt-1">{{ form.age.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label for="id_sex" class="block text-sm font-medium text-gray-700">Sex</label>
+                    <select name="sex" id="id_sex" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900">
+                        <option value="">Select...</option>
+                        {% for value, label in form.fields.sex.choices %}
+                            <option value="{{ value }}" {% if form.sex.value == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.sex.errors %}<p class="text-red-600 text-xs mt-1">{{ form.sex.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label for="id_phone" class="block text-sm font-medium text-gray-700">Phone</label>
+                    <input type="text" name="phone" id="id_phone" value="{{ form.phone.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter phone number">
+                    {% if form.phone.errors %}<p class="text-red-600 text-xs mt-1">{{ form.phone.errors.0 }}</p>{% endif %}
+                </div>
+                <div class="md:col-span-2">
+                    <label for="id_address" class="block text-sm font-medium text-gray-700">Address</label>
+                    <textarea name="address" id="id_address" rows="2" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter address">{{ form.address.value|default_if_none:'' }}</textarea>
+                    {% if form.address.errors %}<p class="text-red-600 text-xs mt-1">{{ form.address.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label for="id_guardian_name" class="block text-sm font-medium text-gray-700">Guardian Name</label>
+                    <input type="text" name="guardian_name" id="id_guardian_name" value="{{ form.guardian_name.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter guardian's name">
+                    {% if form.guardian_name.errors %}<p class="text-red-600 text-xs mt-1">{{ form.guardian_name.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label for="id_guardian_phone" class="block text-sm font-medium text-gray-700">Guardian Phone</label>
+                    <input type="text" name="guardian_phone" id="id_guardian_phone" value="{{ form.guardian_phone.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter guardian's phone">
+                    {% if form.guardian_phone.errors %}<p class="text-red-600 text-xs mt-1">{{ form.guardian_phone.errors.0 }}</p>{% endif %}
+                </div>
+                <div class="md:col-span-2">
+                    <label for="id_medical_history" class="block text-sm font-medium text-gray-700">Medical History <span class="text-gray-400 text-xs">(optional)</span></label>
+                    <textarea name="medical_history" id="id_medical_history" rows="2" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter medical history">{{ form.medical_history.value|default_if_none:'' }}</textarea>
+                    {% if form.medical_history.errors %}<p class="text-red-600 text-xs mt-1">{{ form.medical_history.errors.0 }}</p>{% endif %}
+                </div>
+                <div class="md:col-span-2">
+                    <label for="id_diagnosis_report" class="block text-sm font-medium text-gray-700">Diagnosis Report <span class="text-gray-400 text-xs">(optional)</span></label>
+                    <textarea name="diagnosis_report" id="id_diagnosis_report" rows="2" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter diagnosis report or file path">{{ form.diagnosis_report.value|default_if_none:'' }}</textarea>
+                    {% if form.diagnosis_report.errors %}<p class="text-red-600 text-xs mt-1">{{ form.diagnosis_report.errors.0 }}</p>{% endif %}
+                </div>
+            </div>
+            <div class="flex items-center gap-3 mt-8">
+                <button type="submit" class="inline-flex items-center px-5 py-2 bg-primary-600 text-white rounded-lg shadow hover:bg-primary-700 transition font-semibold btn-animate focus-outline">Save</button>
+                <a href="{% url 'patient_list' %}" class="inline-flex items-center px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-semibold btn-animate focus-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Portal - HMS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/patient homepage.css">
+</head>
+<body>
+    {% include 'navbar.html' %}
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="content-section active">
+            <div class="welcome-banner">
+                <i class="fas fa-hospital-alt" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+                <h1 class="welcome-title" id="welcomeTitle">Welcome Back, John!</h1>
+                <p class="welcome-subtitle">Your health journey continues with our comprehensive care</p>
+            </div>
+            <div class="cards-grid">
+                <div class="info-card success">
+                    <div class="card-header">
+                        <div class="card-icon success">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="card-title"><i class="fas fa-heartbeat" style="margin-right: 0.5rem;"></i>Health Status</h3>
+                            <p class="card-subtitle">Current condition overview</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Status:</strong> Stable</p>
+                        <p><strong>Last Visit:</strong> June 25, 2025</p>
+                        <p><strong>Next Appointment:</strong> June 30, 2025</p>
+                    </div>
+                </div>
+
+                <div class="info-card info">
+                    <div class="card-header">
+                        <div class="card-icon info">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Upcoming Appointments</h3>
+                            <p class="card-subtitle">Your scheduled visits</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>June 30:</strong> Cardiology Follow-up</p>
+                        <p><strong>July 5:</strong> Lab Results Review</p>
+                        <p><strong>July 12:</strong> Physical Therapy</p>
+                    </div>
+                </div>
+
+                <div class="info-card warning">
+                    <div class="card-header">
+                        <div class="card-icon warning">
+                            <i class="fas fa-pills"></i>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Medications</h3>
+                            <p class="card-subtitle">Current prescriptions</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Aspirin:</strong> 1 tablet daily</p>
+                        <p><strong>Lisinopril:</strong> 10mg daily</p>
+                        <p><strong>Reminder:</strong> Take with food</p>
+                    </div>
+                </div>
+
+                <div class="info-card danger">
+                    <div class="card-header">
+                        <div class="card-icon danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div>
+                            <h3 class="card-title">Important Alerts</h3>
+                            <p class="card-subtitle">Health reminders</p>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <p><strong>Lab Work Due:</strong> Blood test needed</p>
+                        <p><strong>Insurance:</strong> Coverage expires soon</p>
+                        <p><strong>Vaccination:</strong> Flu shot recommended</p>
+                    </div>
+                </div>
+            </div>
+            <hr style="margin: 2rem 0; border: 0; border-top: 1px solid var(--gray-200);" />
+            <h3 class="quick-options-caption" style="text-align:center; margin-bottom: 1rem; margin-top: 2rem; color: var(--primary-color);">Quick Actions</h3>
+            <div class="quick-options">
+                <button class="quick-option-btn"><i class="fas fa-calendar-plus"></i> Book Appointment</button>
+                <button class="quick-option-btn"><i class="fas fa-file-medical"></i> View Reports</button>
+                <button class="quick-option-btn"><i class="fas fa-user-md"></i> Contact Doctor</button>
+                <button class="quick-option-btn"><i class="fas fa-pills"></i> Request Prescription</button>
+            </div>
+        </section>
+
+        <!-- Chatbot Section -->
+        <section id="chatbot" class="content-section">
+            <div class="chatbot-container">
+                <div class="chatbot-header">
+                    <h2><i class="fas fa-robot"></i> Medical Assistant Chatbot</h2>
+                    <p>Ask me about your health, medications, or appointments</p>
+                </div>
+                <div class="chatbot-messages" id="chat-messages">
+                    <div style="text-align: center; padding: 2rem; color: var(--text-muted);">
+                        <i class="fas fa-robot" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                        <p>Hello! I'm your medical assistant. How can I help you today?</p>
+                    </div>
+                </div>
+                <div class="chatbot-input">
+                    <input type="text" class="chat-input" placeholder="Type your message here..." id="chat-input">
+                    <button class="chat-send-btn" onclick="sendMessage()">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ICU Section -->
+        <section id="icu" class="content-section">
+            <h2 style="margin-bottom: 1.5rem;">ICU Information</h2>
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ICU Unit</th>
+                            <th>Room</th>
+                            <th>Status</th>
+                            <th>Patient</th>
+                            <th>Condition</th>
+                            <th>Last Updated</th>
+                        </tr>
+                    </thead>
+                    <tbody id="icu-table">
+                        <tr>
+                            <td>ICU-01</td>
+                            <td>Room 101</td>
+                            <td><span class="status-badge status-occupied">Occupied</span></td>
+                            <td>John Doe (You)</td>
+                            <td><span class="status-badge status-stable">Stable</span></td>
+                            <td>2 hours ago</td>
+                        </tr>
+                        <tr>
+                            <td>ICU-02</td>
+                            <td>Room 102</td>
+                            <td><span class="status-badge status-occupied">Occupied</span></td>
+                            <td>Patient B</td>
+                            <td><span class="status-badge status-monitoring">Monitoring</span></td>
+                            <td>30 minutes ago</td>
+                        </tr>
+                        <tr>
+                            <td>ICU-03</td>
+                            <td>Room 103</td>
+                            <td><span class="status-badge status-available">Available</span></td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bedding Section -->
+        <section id="bedding" class="content-section">
+            <h2 style="margin-bottom: 1.5rem;">Bed Availability</h2>
+            <div class="data-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Bed Number</th>
+                            <th>Ward</th>
+                            <th>Room</th>
+                            <th>Status</th>
+                            <th>Patient</th>
+                            <th>Admission Date</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bedding-table">
+                        <tr>
+                            <td>B-101</td>
+                            <td>Cardiology</td>
+                            <td>Room 201</td>
+                            <td><span class="status-badge status-occupied">Occupied</span></td>
+                            <td>John Doe (You)</td>
+                            <td>June 24, 2025</td>
+                        </tr>
+                        <tr>
+                            <td>B-102</td>
+                            <td>Cardiology</td>
+                            <td>Room 202</td>
+                            <td><span class="status-badge status-available">Available</span></td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>B-103</td>
+                            <td>General</td>
+                            <td>Room 203</td>
+                            <td><span class="status-badge status-occupied">Occupied</span></td>
+                            <td>Patient C</td>
+                            <td>June 25, 2025</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Profile Section -->
+        <section id="profile" class="content-section">
+            <div class="profile-section">
+                <div class="profile-card">
+                    <div class="profile-avatar-large">JD</div>
+                    <div style="text-align: center;">
+                        <h2>John Doe</h2>
+                        <p style="color: var(--text-muted);">Patient ID: P001</p>
+                    </div>
+                </div>
+                
+                <div class="profile-card">
+                    <h3 style="margin-bottom: 1.5rem;">Personal Information</h3>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Full Name</div>
+                        <div class="profile-value">John Michael Doe</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Date of Birth</div>
+                        <div class="profile-value">January 15, 1980</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Age</div>
+                        <div class="profile-value">45 years</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Gender</div>
+                        <div class="profile-value">Male</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Phone Number</div>
+                        <div class="profile-value">+1 (555) 123-4567</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Email</div>
+                        <div class="profile-value">john.doe@email.com</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Address</div>
+                        <div class="profile-value">123 Main Street, City, State 12345</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Emergency Contact</div>
+                        <div class="profile-value">Jane Doe - +1 (555) 987-6543</div>
+                    </div>
+                    
+                    <div class="profile-field">
+                        <div class="profile-label">Insurance</div>
+                        <div class="profile-value">Blue Cross Blue Shield - Policy #12345</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/static/patient homepage.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Function to set active link based on localStorage
+            function setActiveLink() {
+                const activePage = localStorage.getItem("activePage");
+                if (activePage) {
+                    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute("href") === activePage) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            }
+
+            // Set active link on page load
+            setActiveLink();
+
+            // Store active link on click
+            const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener("click", function(event) {
+                    localStorage.setItem("activePage", this.getAttribute("href"));
+                    setActiveLink();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

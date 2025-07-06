@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-lg mx-auto bg-white rounded-xl shadow border border-gray-200 mt-16">
+    <div class="px-6 py-4 border-b border-gray-100">
+        <h2 class="text-xl font-bold text-red-600">Delete Doctor</h2>
+    </div>
+    <div class="px-6 py-8">
+        <p class="mb-6 text-gray-700 text-lg">Are you sure you want to delete <span class="font-semibold text-red-600">{{ doctor.name }}</span>?</p>
+        <form method="post" class="flex items-center gap-4">
+            {% csrf_token %}
+            <button type="submit" class="inline-flex items-center px-5 py-2 bg-red-600 text-white rounded-lg shadow hover:bg-red-700 transition font-semibold">Yes, Delete</button>
+            <a href="{% url 'doctor_detail' doctor.pk %}" class="inline-flex items-center px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-semibold">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %} 

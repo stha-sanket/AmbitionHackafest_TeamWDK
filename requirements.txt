@@ -1,0 +1,15 @@
+Django==4.2.7               
+langchain-core
+langchain
+langchain-google-genai
+google-generativeai
+langchain-huggingface
+transformers
+huggingface-hub
+langchain-community
+langchain-text-splitters
+python-dotenv
+langchain_chroma
+flask
+markdown
+Pillow

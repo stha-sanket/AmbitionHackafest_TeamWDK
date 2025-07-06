@@ -1,0 +1,448 @@
+{
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -380,
+        540
+      ],
+      "id": "b10f21fe-6c98-4f2a-ab32-bb21f2ddbba0",
+      "name": "Telegram Trigger",
+      "webhookId": "96e95a3c-7176-40d3-b318-25d1fab7d7ee",
+      "credentials": {
+        "telegramApi": {
+          "id": "7ims7DOHNzcXBBp4",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message.text }}",
+        "options": {
+          "systemMessage": "If the user asks about their schedule, check the connected calendar and provide the details.\n\nIf the user inquires about ordering medicine, send an email to sanketshrestha09@gmail.com requesting the order.\n\nIf the user asks about the need for blood, search the HMS Google Sheet to identify individuals with the same blood type. Send an email to everyone in the sheet who matches the same blood type.\n\nIf the user requests a medicine reminder, return the names of individuals who have their reminder set to \"yes.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -140,
+        540
+      ],
+      "id": "e93f4166-5b39-43a5-8c4c-3bc1bd0e9eb7",
+      "name": "AI Agent2"
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-1.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -600,
+        740
+      ],
+      "id": "5c20c69e-b6a7-4344-a3d7-2ec313b16e18",
+      "name": "Google Gemini Chat Model2",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "ECxBTAzKMDbNdt1P",
+          "name": "Google Gemini(PaLM) Api account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Telegram Trigger').item.json.message.from.id }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -220,
+        1100
+      ],
+      "id": "c8b0e27d-127f-4f8b-8855-13c9d5bcc9d2",
+      "name": "Simple Memory2"
+    },
+    {
+      "parameters": {
+        "sendTo": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('To', ``, 'string') }}",
+        "subject": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Subject', ``, 'string') }}",
+        "message": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Message', ``, 'string') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmailTool",
+      "typeVersion": 2.1,
+      "position": [
+        220,
+        840
+      ],
+      "id": "abfdf6cf-01e7-4dd0-9af3-f29a2bb0a19d",
+      "name": "Send a message in Gmail",
+      "webhookId": "dae90442-600a-4b67-8b8e-c96d891e8828",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "86x1m5HrCDpNcYp4",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1VJtokPAvKo09Hhga_FKHzFCJJ2D-hrCDefkOQ9RKXy4",
+          "mode": "list",
+          "cachedResultName": "HMS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VJtokPAvKo09Hhga_FKHzFCJJ2D-hrCDefkOQ9RKXy4/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "HMS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1VJtokPAvKo09Hhga_FKHzFCJJ2D-hrCDefkOQ9RKXy4/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Medicine Reminder",
+              "lookupValue": "yes"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheetsTool",
+      "typeVersion": 4.6,
+      "position": [
+        60,
+        940
+      ],
+      "id": "180b592c-a280-42d8-bbb1-48a2c7a038ef",
+      "name": "Get row(s) in sheet in Google Sheets1",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "3LJZtJdiJq1jBgnq",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "text": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        220,
+        540
+      ],
+      "id": "87ae348d-1f2d-42c1-a443-919014e12676",
+      "name": "Send a text message",
+      "webhookId": "c82f8f0a-0cf6-4818-94e9-a77daf5591b1",
+      "credentials": {
+        "telegramApi": {
+          "id": "7ims7DOHNzcXBBp4",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.messages[0].from }}",
+        "contextWindowLength": 20
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -120,
+        1720
+      ],
+      "id": "a583a91e-743c-40c7-aeda-2c66ec65b218",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "operation": "send",
+        "phoneNumberId": "615768378296299",
+        "recipientPhoneNumber": "={{ $('WhatsApp Trigger').item.json.messages[0].from }}",
+        "textBody": "={{ $json.output }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.whatsApp",
+      "typeVersion": 1,
+      "position": [
+        136,
+        1320
+      ],
+      "id": "17e712d4-1f92-4802-882c-7b5083e47dad",
+      "name": "Send message",
+      "webhookId": "3c82b73f-aa7b-4f5e-ba8b-0726ee5cdbdc",
+      "credentials": {
+        "whatsAppApi": {
+          "id": "am5Ki31qGsTZBZUM",
+          "name": "WhatsApp account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelName": "models/gemini-2.5-flash",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -280,
+        1500
+      ],
+      "id": "49688f8d-ceda-4add-8b6b-69d7cee86296",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "8njJzBfHA2vncdia",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=answer {{ $json.messages[0].text.body }} to user {{ $json.contacts[0].profile.name }}",
+        "options": {
+          "systemMessage": "=You are a helpful and informative chatbot named helphospi reply politely"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -240,
+        1320
+      ],
+      "id": "0afe3da0-6c77-450d-979d-5f9738a1f3d2",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "updates": [
+          "messages"
+        ],
+        "options": {}
+      },
+      "type": "n8n-nodes-base.whatsAppTrigger",
+      "typeVersion": 1,
+      "position": [
+        -460,
+        1320
+      ],
+      "id": "64d08e52-8b35-4950-8dfb-6800283d97ea",
+      "name": "WhatsApp Trigger",
+      "webhookId": "d73ee0f2-2b17-4f3e-ab41-6c36a7d32930",
+      "credentials": {
+        "whatsAppTriggerApi": {
+          "id": "gtAIw24yPHeVqAbH",
+          "name": "WhatsApp OAuth account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "5bbdabba89488e15afdfb6d3fa2e6c7509629772ccc6a6f487ee63cd6d64c2ac@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Sunway-College"
+        },
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleCalendarTool",
+      "typeVersion": 1.3,
+      "position": [
+        620,
+        760
+      ],
+      "id": "06eb84af-bfc1-4bba-a4f2-bb590e7f8d8a",
+      "name": "callender",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "CzuoPsYtBgCnJbuW",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent2": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory2": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a message in Gmail": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet in Google Sheets1": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send a text message": {
+      "main": [
+        []
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "WhatsApp Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "callender": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent2",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {
+    "Telegram Trigger": [
+      {
+        "update_id": 160932045,
+        "message": {
+          "message_id": 17,
+          "from": {
+            "id": 8109579077,
+            "is_bot": false,
+            "first_name": "Sanket",
+            "last_name": "Shrestha",
+            "language_code": "en"
+          },
+          "chat": {
+            "id": 8109579077,
+            "first_name": "Sanket",
+            "last_name": "Shrestha",
+            "type": "private"
+          },
+          "date": 1751056127,
+          "text": "can you email tell to restock 20 boxes of antirepelent medicine to sanketshrestha09@gmail.com"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ca337c5c30b8ead4926948d73e7e9025580cc051050888768abe90ee01ca87c2"
+  }
+}

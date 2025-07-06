@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow border border-gray-200 mt-8 card-animate">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-gray-900">{% if admission %}Edit{% else %}Add{% endif %} Admission</h2>
+    </div>
+    <div class="px-6 py-6">
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="id_patient" class="block text-sm font-medium text-gray-700">Patient</label>
+                    <select name="patient" id="id_patient" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900">
+                        <option value="">Select...</option>
+
+                        {% if waiting_patients %}
+                            {% for wp in waiting_patients %}
+                                <option value="{{ wp.patient.pk }}" {% if form.patient.value|stringformat:'s' == wp.patient.pk|stringformat:'s' %}selected{% endif %}>
+                                    {{ wp.patient.name }} (Waiting)
+                                </option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    {% if form.patient.errors %}
+                        <p class="text-red-600 text-xs mt-1">{{ form.patient.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="id_doctors" class="block text-sm font-medium text-gray-700">Doctors</label>
+                    <select name="doctors" id="id_doctors" multiple class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900">
+                        {% for d in form.fields.doctors.queryset %}
+                            <option value="{{ d.pk }}" {% if d.pk|stringformat:'s' in form.doctors.value|stringformat:'s' %}selected{% endif %}>
+                                Dr. {{ d.name }} ({{ d.specialization }})
+                            </option>
+                        {% endfor %}
+                    </select>
+                    <span class="text-xs text-gray-400">Hold Ctrl (Windows) or Command (Mac) to select multiple</span>
+                    {% if form.doctors.errors %}
+                        <p class="text-red-600 text-xs mt-1">{{ form.doctors.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="id_bed" class="block text-sm font-medium text-gray-700">Bed</label>
+                    <select name="bed" id="id_bed" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900">
+                        <option value="">Select...</option>
+                        {% for b in form.fields.bed.queryset %}
+                            <option value="{{ b.pk }}" {% if form.bed.value|stringformat:'s' == b.pk|stringformat:'s' %}selected{% endif %}>
+                                {{ b.bed_type }} - {{ b.bed_number }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                    {% if form.bed.errors %}
+                        <p class="text-red-600 text-xs mt-1">{{ form.bed.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div>
+                    <label for="id_status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select name="status" id="id_status" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900">
+                        <option value="critical" {% if form.status.value == 'critical' %}selected{% endif %}>Critical</option>
+                        <option value="normal" {% if form.status.value == 'normal' %}selected{% endif %}>Normal</option>
+                        <option value="discharged" {% if form.status.value == 'discharged' %}selected{% endif %}>Discharged</option>
+                    </select>
+                    {% if form.status.errors %}
+                        <p class="text-red-600 text-xs mt-1">{{ form.status.errors.0 }}</p>
+                    {% endif %}
+                </div>
+                <div class="md:col-span-2">
+                    <label for="id_diagnosis_notes" class="block text-sm font-medium text-gray-700">Diagnosis Notes</label>
+                    <textarea name="diagnosis_notes" id="id_diagnosis_notes" rows="2" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter diagnosis notes">{{ form.diagnosis_notes.value|default_if_none:'' }}</textarea>
+                    {% if form.diagnosis_notes.errors %}
+                        <p class="text-red-600 text-xs mt-1">{{ form.diagnosis_notes.errors.0 }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="flex items-center gap-3 mt-8">
+                <button type="submit" class="inline-flex items-center px-5 py-2 bg-primary-600 text-white rounded-lg shadow hover:bg-primary-700 transition font-semibold btn-animate focus-outline">Save</button>
+                <a href="{% url 'admission_list' %}" class="inline-flex items-center px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-semibold btn-animate focus-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

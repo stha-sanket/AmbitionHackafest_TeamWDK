@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-xl mx-auto bg-white rounded-xl shadow border border-gray-200 mt-8">
+    <div class="px-6 py-4 border-b border-gray-100">
+        <h2 class="text-xl font-bold text-gray-900">Add to Bed Waiting List</h2>
+    </div>
+    <div class="px-6 py-6">
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="md:col-span-2">
+                    {{ form.patient.label_tag }}
+                    {{ form.patient }}
+                    {% if form.patient.errors %}
+                        {% for error in form.patient.errors %}
+                            <p class="text-red-600 text-xs mt-1">{{ error }}</p>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <div class="md:col-span-2">
+                    <label for="id_bed_type" class="block text-sm font-medium text-gray-700">Bed Type</label>
+                    <select name="bed_type" id="id_bed_type" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900">
+                        <option value="">Select...</option>
+                        {% for value, label in form.fields.bed_type.choices %}
+                            <option value="{{ value }}" {% if form.bed_type.value == value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.bed_type.errors %}<p class="text-red-600 text-xs mt-1">{{ form.bed_type.errors.0 }}</p>{% endif %}
+                </div>
+            </div>
+            <div class="flex items-center gap-3 mt-8">
+                <button type="submit" class="inline-flex items-center px-5 py-2 bg-primary-600 text-white rounded-lg shadow hover:bg-primary-700 transition font-semibold">Add</button>
+                <a href="{% url 'waiting_list' %}" class="inline-flex items-center px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-semibold">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 

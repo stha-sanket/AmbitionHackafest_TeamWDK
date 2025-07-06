@@ -1,0 +1,378 @@
+# Hospital Navigation Guide - Single Floor Layout
+
+## 🏥 Hospital Layout Overview
+This single-floor hospital consists of 8 key locations connected by main corridors with clear landmarks for navigation.
+
+## 📍 Key Landmarks for Navigation
+- **Red Lamp**: Central landmark visible from main entrance
+- **Big Tree**: Located past the Front Desk, serves as ICU ward marker
+- **Front Desk**: Central hub for hospital operations
+
+---
+
+## 🗺️ Complete Navigation Matrix
+
+### FROM MAIN GATE
+
+**To Public Toilet:**
+- Walk straight from Main Gate until you reach the **red lamp**
+- Turn **left** at the red lamp
+- Public Toilet will be directly ahead
+
+**To Cafeteria:**
+- Walk straight from Main Gate until you reach the **red lamp**
+- Turn **left** at the red lamp (towards Public Toilet)
+- From Public Toilet, turn **right**
+- Cafeteria will be directly ahead
+
+**To Front Desk:**
+- Walk straight from Main Gate past the **red lamp**
+- Continue straight ahead
+- Front Desk will be directly in front of you
+
+**To ICU Ward:**
+- Walk straight to **Front Desk**
+- From Front Desk, turn **left**
+- Walk straight until you see the **big tree**
+- From the big tree, continue **straight**
+- ICU Ward (4-bed) will be ahead
+
+**To Pharmacy:**
+- Walk straight to **Front Desk**
+- From Front Desk, turn **right**
+- Walk straight ahead
+- Pharmacy will be on your right
+
+**To Cabin Ward:**
+- Walk straight to **Front Desk**
+- From Front Desk, continue **straight ahead**
+- Cabin Ward (8-bed) will be directly in front
+
+**To Operation Theatre:**
+- Walk straight to **Front Desk**
+- Turn **left** towards the **big tree**
+- Continue straight past the big tree to **ICU Ward**
+- From ICU Ward, walk **straight ahead**
+- Operation Theatre will be directly ahead
+
+---
+
+### FROM FRONT DESK (Central Hub)
+
+**To Main Gate:**
+- Turn around and walk **straight back**
+- Continue past the **red lamp**
+- Main Gate will be ahead
+
+**To Public Toilet:**
+- Walk **straight back** towards Main Gate until **red lamp**
+- Turn **left** at red lamp
+- Public Toilet ahead
+
+**To Cafeteria:**
+- Walk **straight back** towards Main Gate until **red lamp**
+- Turn **left** at red lamp to Public Toilet
+- From Public Toilet, turn **right**
+- Cafeteria ahead
+
+**To ICU Ward:**
+- Turn **left** from Front Desk
+- Walk straight to the **big tree**
+- From big tree, continue **straight**
+- ICU Ward (4-bed) ahead
+
+**To Pharmacy:**
+- Turn **right** from Front Desk
+- Walk straight
+- Pharmacy on your right
+
+**To Cabin Ward:**
+- Walk **straight ahead** from Front Desk
+- Cabin Ward (8-bed) directly ahead
+
+**To Operation Theatre:**
+- Turn **left** towards **big tree**
+- Continue straight past big tree to **ICU Ward**
+- From ICU, walk **straight**
+- Operation Theatre ahead
+
+---
+
+### FROM ICU WARD
+
+**To Operation Theatre:**
+- Walk **straight ahead** from ICU Ward exit
+- Operation Theatre directly ahead
+
+**To Front Desk:**
+- Walk **back** from ICU towards **big tree**
+- From big tree, turn **right**
+- Front Desk directly ahead
+
+**To Cabin Ward:**
+- Walk **back** towards **big tree**
+- From big tree, turn **right** to Front Desk
+- From Front Desk, continue **straight**
+- Cabin Ward ahead
+
+**To Pharmacy:**
+- Walk **back** towards **big tree**
+- From big tree, turn **right** to Front Desk
+- From Front Desk, turn **right**
+- Pharmacy ahead
+
+**To Main Gate:**
+- Walk **back** towards **big tree**
+- From big tree, turn **right** to Front Desk
+- From Front Desk, walk **straight back** past **red lamp**
+- Main Gate ahead
+
+**To Cafeteria:**
+- Walk **back** towards **big tree** and continue to Front Desk
+- From Front Desk, walk back to **red lamp**
+- Turn **left** at red lamp to Public Toilet
+- From Public Toilet, turn **right**
+- Cafeteria ahead
+
+**To Public Toilet:**
+- Walk **back** towards **big tree** and continue to Front Desk
+- From Front Desk, walk back to **red lamp**
+- Turn **left** at red lamp
+- Public Toilet ahead
+
+---
+
+### FROM OPERATION THEATRE
+
+**To ICU Ward:**
+- Walk **straight back** from Operation Theatre
+- ICU Ward (4-bed) directly behind
+
+**To Cabin Ward:**
+- Turn **left** from Operation Theatre exit
+- Walk towards Cabin Ward (8-bed)
+- *Alternative route:* Walk back to ICU, then follow ICU to Cabin Ward directions
+
+**To Front Desk:**
+- Walk **back** to ICU Ward
+- From ICU, walk towards **big tree**
+- From big tree, turn **right**
+- Front Desk ahead
+
+**To Pharmacy:**
+- Walk **back** to ICU Ward
+- From ICU, walk towards **big tree**
+- From big tree, turn **right** to Front Desk
+- From Front Desk, turn **right**
+- Pharmacy ahead
+
+**To Main Gate:**
+- Walk **back** to ICU Ward
+- Follow ICU to Front Desk directions
+- From Front Desk, walk **straight back** past **red lamp**
+- Main Gate ahead
+
+**To Cafeteria:**
+- Walk **back** to ICU Ward
+- Follow ICU to Front Desk directions
+- From Front Desk to **red lamp**, turn **left** to Public Toilet
+- From Public Toilet, turn **right**
+- Cafeteria ahead
+
+**To Public Toilet:**
+- Walk **back** to ICU Ward
+- Follow ICU to Front Desk directions
+- From Front Desk to **red lamp**, turn **left**
+- Public Toilet ahead
+
+---
+
+### FROM PHARMACY
+
+**To Front Desk:**
+- Turn **left** from Pharmacy exit
+- Walk straight
+- Front Desk directly ahead
+
+**To Cabin Ward:**
+- Walk to **Front Desk** first
+- From Front Desk, continue **straight**
+- Cabin Ward (8-bed) ahead
+
+**To ICU Ward:**
+- Walk to **Front Desk** first
+- From Front Desk, turn **left** to **big tree**
+- From big tree, continue **straight**
+- ICU Ward (4-bed) ahead
+
+**To Operation Theatre:**
+- Walk to **Front Desk** first
+- Follow Front Desk to ICU Ward directions
+- From ICU, walk **straight**
+- Operation Theatre ahead
+
+**To Main Gate:**
+- Walk to **Front Desk** first
+- From Front Desk, walk **straight back** past **red lamp**
+- Main Gate ahead
+
+**To Cafeteria:**
+- Walk to **Front Desk** first
+- From Front Desk, walk back to **red lamp**
+- Turn **left** at red lamp to Public Toilet
+- From Public Toilet, turn **right**
+- Cafeteria ahead
+
+**To Public Toilet:**
+- Walk to **Front Desk** first
+- From Front Desk, walk back to **red lamp**
+- Turn **left** at red lamp
+- Public Toilet ahead
+
+---
+
+### FROM CABIN WARD
+
+**To Front Desk:**
+- Walk **straight back** from Cabin Ward
+- Front Desk directly behind
+
+**To Operation Theatre:**
+- Walk **back** to Front Desk
+- From Front Desk, turn **left** to **big tree**
+- Continue past big tree to **ICU Ward**
+- From ICU, walk **straight**
+- Operation Theatre ahead
+- *Alternative route:* Turn **left** directly from Cabin Ward to Operation Theatre
+
+**To ICU Ward:**
+- Walk **back** to Front Desk
+- From Front Desk, turn **left** to **big tree**
+- From big tree, continue **straight**
+- ICU Ward (4-bed) ahead
+
+**To Pharmacy:**
+- Walk **back** to Front Desk
+- From Front Desk, turn **right**
+- Pharmacy ahead
+
+**To Main Gate:**
+- Walk **back** to Front Desk
+- From Front Desk, walk **straight back** past **red lamp**
+- Main Gate ahead
+
+**To Cafeteria:**
+- Walk **back** to Front Desk
+- From Front Desk, walk back to **red lamp**
+- Turn **left** at red lamp to Public Toilet
+- From Public Toilet, turn **right**
+- Cafeteria ahead
+
+**To Public Toilet:**
+- Walk **back** to Front Desk
+- From Front Desk, walk back to **red lamp**
+- Turn **left** at red lamp
+- Public Toilet ahead
+
+---
+
+### FROM CAFETERIA
+
+**To Public Toilet:**
+- Turn **left** from Cafeteria exit
+- Public Toilet directly to your left
+
+**To Main Gate:**
+- Walk to **Public Toilet** first
+- From Public Toilet, turn **right** to **red lamp**
+- From red lamp, walk **straight**
+- Main Gate ahead
+
+**To Front Desk:**
+- Walk to **Public Toilet** first
+- From Public Toilet, turn **right** to **red lamp**
+- From red lamp, continue **straight**
+- Front Desk ahead
+
+**To ICU Ward:**
+- Follow Cafeteria to Front Desk directions
+- From Front Desk, turn **left** to **big tree**
+- From big tree, continue **straight**
+- ICU Ward (4-bed) ahead
+
+**To Operation Theatre:**
+- Follow Cafeteria to Front Desk directions
+- From Front Desk, turn **left** to **big tree**
+- Continue past big tree to **ICU Ward**
+- From ICU, walk **straight**
+- Operation Theatre ahead
+
+**To Pharmacy:**
+- Follow Cafeteria to Front Desk directions
+- From Front Desk, turn **right**
+- Pharmacy ahead
+
+**To Cabin Ward:**
+- Follow Cafeteria to Front Desk directions
+- From Front Desk, continue **straight**
+- Cabin Ward (8-bed) ahead
+
+---
+
+### FROM PUBLIC TOILET
+
+**To Cafeteria:**
+- Turn **right** from Public Toilet exit
+- Cafeteria directly to your right
+
+**To Main Gate:**
+- Turn **right** from Public Toilet to **red lamp**
+- From red lamp, walk **straight**
+- Main Gate ahead
+
+**To Front Desk:**
+- Turn **right** from Public Toilet to **red lamp**
+- From red lamp, continue **straight**
+- Front Desk ahead
+
+**To ICU Ward:**
+- Follow Public Toilet to Front Desk directions
+- From Front Desk, turn **left** to **big tree**
+- From big tree, continue **straight**
+- ICU Ward (4-bed) ahead
+
+**To Operation Theatre:**
+- Follow Public Toilet to Front Desk directions
+- From Front Desk, turn **left** to **big tree**
+- Continue past big tree to **ICU Ward**
+- From ICU, walk **straight**
+- Operation Theatre ahead
+
+**To Pharmacy:**
+- Follow Public Toilet to Front Desk directions
+- From Front Desk, turn **right**
+- Pharmacy ahead
+
+**To Cabin Ward:**
+- Follow Public Toilet to Front Desk directions
+- From Front Desk, continue **straight**
+- Cabin Ward (8-bed) ahead
+
+---
+
+## 🏥 Facility Information
+
+- **ICU Ward**: 4-bed intensive care unit
+- **Cabin Ward**: 8-bed private rooms
+- **Operation Theatre**: Surgical procedures area
+- **Pharmacy**: Medication dispensing
+- **Cafeteria**: Food and refreshments
+- **Front Desk**: Information and reception hub
+- **Public Toilet**: Restroom facilities
+- **Main Gate**: Hospital entrance/exit
+
+## 📝 Navigation Tips
+- **Front Desk** serves as the central hub - most destinations can be reached efficiently by going through Front Desk first
+- **Red Lamp** is the key landmark near the entrance for Public Toilet and Cafeteria access
+- **Big Tree** marks the path to ICU Ward from Front Desk
+- All areas are on a single floor for easy accessibility

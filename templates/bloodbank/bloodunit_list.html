@@ -1,0 +1,66 @@
+    {% extends 'base.html' %}
+    {% block content %}
+    <div class="flex items-center justify-between mb-8">
+        <h2 class="text-3xl font-bold text-gray-900 mb-2">Blood Bank - POS</h2>
+        <div class="flex items-center space-x-4">
+            <a href="{% url 'bloodunit_add' %}" class="inline-flex items-center px-6 py-3 bg-primary-600 text-white rounded-xl shadow hover:bg-primary-700 transition text-lg font-semibold btn-animate focus-outline mb-8">
+                <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                Add Blood Unit
+            </a>
+        </div>
+    </div>
+
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="overflow-x-auto bg-white rounded-2xl shadow border border-gray-200">
+            <table class="min-w-full divide-y divide-gray-200 text-lg">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Blood Group</th>
+                        <th class="px-8 py-4 text-left text-base font-bold text-gray-600 uppercase tracking-wider">Quantity Available</th>
+                        <th class="px-8 py-4 text-center text-base font-bold text-gray-600 uppercase tracking-wider">Select</th>
+                        <th class="px-8 py-4 text-center text-base font-bold text-gray-600 uppercase tracking-wider">Quantity to Dispense</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-100">
+                {% for bloodunit in bloodunits %}
+                    <tr class="hover:bg-primary-50 transition row-animate">
+                        <td class="px-8 py-4 whitespace-nowrap text-lg text-gray-900">{{ bloodunit.blood_group }}</td>
+                        <td class="px-8 py-4 whitespace-nowrap text-lg">{{ bloodunit.quantity }}</td>
+                        <td class="px-8 py-4 whitespace-nowrap text-center text-lg">
+                            <input type="radio" name="selected_bloodunit" value="{{ bloodunit.pk }}" class="form-radio h-5 w-5 text-blue-500">
+                        </td>
+                        <td class="px-8 py-4 whitespace-nowrap text-center text-lg">
+                            <input type="number" name="quantity_{{ bloodunit.pk }}" min="0" value="0" class="w-20 text-center border rounded-md">
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center py-10 text-gray-400 text-lg">No blood units found.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        </div>
+        <div class="mt-6 flex flex-col items-center space-y-4">
+            <!-- Edit & Delete Buttons Side-by-Side -->
+            <div class="flex space-x-4">
+                <button type="submit" name="edit_bloodunit" class="inline-flex items-center px-6 py-3 rounded-xl shadow transition text-lg font-semibold btn-animate focus-outline bg-yellow-500 text-white hover:bg-yellow-700"> 
+                    <i class="fas fa-edit mr-2"></i> Edit
+                </button>
+                <button type="submit" name="delete_bloodunit" class="inline-flex items-center px-6 py-3 rounded-xl shadow transition text-lg font-semibold btn-animate focus-outline bg-red-500 text-white hover:bg-red-700">  
+                    <i class="fas fa-trash-alt mr-2"></i> Delete
+                </button>
+            </div>
+        
+            <!-- Dispense Blood Button Below -->
+            <button type="submit" class="inline-flex items-center bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded shadow">
+                <i class="fas fa-tint mr-2"></i> Dispense Blood
+            </button>
+        </div>
+        
+
+    {% endblock %}

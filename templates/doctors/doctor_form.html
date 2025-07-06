@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="max-w-2xl mx-auto bg-white rounded-xl shadow border border-gray-200 mt-8 card-animate">
+    <div class="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+        <h2 class="text-xl font-bold text-gray-900">{% if doctor %}Edit{% else %}Add{% endif %} Doctor</h2>
+    </div>
+    <div class="px-6 py-6">
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="id_name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                    <input type="text" name="name" id="id_name" value="{{ form.name.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter doctor's full name">
+                    {% if form.name.errors %}<p class="text-red-600 text-xs mt-1">{{ form.name.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label for="id_department" class="block text-sm font-medium text-gray-700">Department</label>
+                    <input type="text" name="department" id="id_department" value="{{ form.department.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter department">
+                    {% if form.department.errors %}<p class="text-red-600 text-xs mt-1">{{ form.department.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label for="id_specialization" class="block text-sm font-medium text-gray-700">Specialization</label>
+                    <input type="text" name="specialization" id="id_specialization" value="{{ form.specialization.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="Enter specialization">
+                    {% if form.specialization.errors %}<p class="text-red-600 text-xs mt-1">{{ form.specialization.errors.0 }}</p>{% endif %}
+                </div>
+                <div>
+                    <label for="id_availability" class="block text-sm font-medium text-gray-700">Availability <span class="text-gray-400 text-xs">(e.g. Mon-Fri 9am-5pm)</span></label>
+                    <input type="text" name="availability" id="id_availability" value="{{ form.availability.value|default_if_none:'' }}" class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 text-gray-900" placeholder="e.g. Mon-Fri 9am-5pm">
+                    {% if form.availability.errors %}<p class="text-red-600 text-xs mt-1">{{ form.availability.errors.0 }}</p>{% endif %}
+                </div>
+
+            </div>
+            <div class="flex items-center gap-3 mt-8">
+                <button type="submit" class="inline-flex items-center px-5 py-2 bg-primary-600 text-white rounded-lg shadow hover:bg-primary-700 transition font-semibold btn-animate focus-outline">Save</button>
+                <a href="{% url 'doctor_list' %}" class="inline-flex items-center px-5 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition font-semibold btn-animate focus-outline">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %} 
